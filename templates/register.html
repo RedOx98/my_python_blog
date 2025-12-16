@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('{{ url_for('static', filename='assets/img/home-bg.jpg') }}')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>Register</h1>
+          <span class="subheading">Create an account to get started</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Registration Form-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <form action="{{ url_for('register') }}" method="POST">
+        {{ form.hidden_tag() }} <!-- This is for CSRF protection -->
+        
+        <div class="form-group">
+          <label for="name">Name</label>
+          {{ form.name(class="form-control", placeholder="Enter your name") }}
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          {{ form.email(class="form-control", placeholder="Enter your email") }}
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          {{ form.password(class="form-control", placeholder="Create a password") }}
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}

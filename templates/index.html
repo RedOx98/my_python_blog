@@ -29,7 +29,7 @@
           <h3 class="post-subtitle">{{ post.subtitle }}</h3>
         </a>
         <p class="post-meta">
-          Posted by <a href="#">{{ post.author }}</a>
+          Posted by <a href="#">{{ post.author.name }}</a>
           on {{ post.date }}
         </p>
 
@@ -46,7 +46,9 @@
 
       <!-- Create New Post Button -->
       <div class="d-flex justify-content-end mb-4">
+          {% if current_user.is_authenticated %}
         <a class="btn btn-primary float-right" href="{{ url_for('add_new_post') }}">
+            {% endif %}
           Create New Post
         </a>
       </div>
