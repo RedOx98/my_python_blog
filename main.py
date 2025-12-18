@@ -23,11 +23,11 @@ from wtforms.validators import DataRequired, URL, Email
 from sqlalchemy import Integer, String, Text, Boolean
 import os
 
-
+# postgresql://blog_qy8s_user:uhW8bLaO51FLNcm5riGxEOo1yCEUp1LQ@dpg-d51tt463jp1c73f4oiag-a/blog_qy8s
 # -------------------- APP SETUP --------------------
 app = Flask(__name__)
 # app.config["SECRET_KEY"] = "super-secret-key"
-app.config["SECRET_KEY"] = os.environ.get('FLASK_KEY')
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blog.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URL",
@@ -95,8 +95,8 @@ class Comment(db.Model):
     post = db.relationship("BlogPost", backref="comments")
 
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 if app.debug:
     with app.app_context():
