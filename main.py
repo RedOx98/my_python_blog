@@ -15,10 +15,11 @@ from flask_login import (
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditor, CKEditorField
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import DeclarativeBase
+
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, URL, Email
 
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String, Text, Boolean
 import os
 
