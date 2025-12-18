@@ -20,17 +20,26 @@ from wtforms.validators import DataRequired, URL, Email
 
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String, Text, Boolean
+import os
 
 
 # -------------------- APP SETUP --------------------
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "super-secret-key"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blog.db"
-
+# app.config["SECRET_KEY"] = "super-secret-key"
+app.config["SECRET_KEY"] = os.environ.get('FLASK_KEY')
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blog.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL",
+    "sqlite:///posts.db"
+)
 Bootstrap5(app)
 CKEditor(app)
 
+db_url = os.environ.get("DATABASE_URL")
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url or "sqlite:///posts.db"
 # -------------------- DATABASE --------------------
 class Base(DeclarativeBase):
     pass
@@ -85,8 +94,13 @@ class Comment(db.Model):
     post = db.relationship("BlogPost", backref="comments")
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
+
+if app.debug:
+    with app.app_context():
+        db.create_all()
+
 
 
 # -------------------- FORMS --------------------
